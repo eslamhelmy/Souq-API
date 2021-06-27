@@ -1,5 +1,6 @@
 ﻿using Souq.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Souq.Repository
 {
@@ -9,6 +10,8 @@ namespace Souq.Repository
         void AddProduct(Product product);
         void RemoveProduct(Product product);
         Product GetProductById(int id);
+        int GetProductsCount(int? categoryId);
+        IQueryable<Product> GetProductsAsQueryable(int? categoryId);
 
     }
 }

@@ -5,7 +5,7 @@ namespace Souq.Service
 {
     public interface IProductService
     {
-        IEnumerable<ProductViewModel> GetProducts(int? categoryId);
+        PagingViewModel<List<ProductViewModel>> GetProducts(int? categoryId, int pageNumber=1);
         ProductViewModel GetProduct(int productId);
         void AddProduct(ProductCreateViewModel productVM);
         void RemoveProduct(int productId);
