@@ -15,8 +15,7 @@ namespace Souq.Service
         private readonly IProductRepository _repository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
-        private readonly int pageSize = 5;
-
+        
         public ProductService(SouqContext context, IProductRepository repository, ICategoryRepository categoryRepository, IMapper mapper)
         {
             _context = context;
@@ -25,7 +24,7 @@ namespace Souq.Service
             _mapper = mapper;
         }
 
-        public PagingViewModel<List<ProductViewModel>> GetProducts(int categoryId = -1, int pageNumber=1)
+        public PagingViewModel<List<ProductViewModel>> GetProducts(int categoryId = -1, int pageNumber=1, int pageSize= 5)
         {
             var count = _repository.GetProductsCount(categoryId);
             var totalPages = (int)Math.Ceiling(count / (double)pageSize);
