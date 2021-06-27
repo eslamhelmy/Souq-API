@@ -42,6 +42,16 @@ namespace Souq.API
             services.AddScoped<IOrderService, OrderService>();
             services.AddCors();
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            //services.AddSwaggerGen(options =>
+            //{
+            //    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+            //    {
+            //        Title = "Souq API",
+            //        Version = "v1",
+            //        Description = "",
+            //    });
+            //});
+            services.AddSwaggerGen();
 
         }
 
@@ -63,6 +73,12 @@ namespace Souq.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = "";
             });
         }
     }
