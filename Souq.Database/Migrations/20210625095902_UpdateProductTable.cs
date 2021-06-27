@@ -3,7 +3,7 @@
 namespace Souq.Database.Migrations
 {
     public partial class UpdateProductTable : Migration
-    {
+    {//
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
