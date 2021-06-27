@@ -15,6 +15,7 @@ namespace Souq.Service
         private readonly IProductRepository _repository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
+        private readonly int pageSize = 5;
 
         public ProductService(SouqContext context, IProductRepository repository, ICategoryRepository categoryRepository, IMapper mapper)
         {
@@ -24,16 +25,29 @@ namespace Souq.Service
             _mapper = mapper;
         }
 
-        public IEnumerable<ProductViewModel> GetProducts(int? categoryId)
+        public PagingViewModel<List<ProductViewModel>> GetProducts(int? categoryId, int pageNumber=1)
         {
-            var products = _repository.GetProducts(categoryId);
+            var count = _repository.GetProductsCount(categoryId);
+            var totalPages = (int)Math.Ceiling(count / (double)pageSize);
+            var currentPage = pageNumber;
+
+            var products = _repository.GetProductsAsQueryable(categoryId)
+                                .Skip((pageNumber - 1)* pageSize )
+                                .Take(pageSize)
+                                .ToList();
 
             var viewModels = _mapper.Map<List<ProductViewModel>>(products);
             viewModels.ToList().ForEach(x => {
                 x.NewPrice = x.Price - (x.Price * x.DiscountPercentage / 100);
             });
 
-            return viewModels;
+            return new PagingViewModel<List<ProductViewModel>>
+            {
+                TotalPages = totalPages,
+                CurrentPage = pageNumber,
+                items = viewModels,
+                totalItems = count
+            };
         }
 
         public IEnumerable<CategoryViewModel> GetCategories()

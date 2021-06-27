@@ -25,9 +25,9 @@ namespace Souq.API.Controllers
         [HttpGet]
         [Route("GetProducts")]
        // [CheckToken]
-        public IEnumerable<ProductViewModel> GetProducts(int? categoryId)
+        public PagingViewModel<List<ProductViewModel>> GetProducts(int? categoryId, int pageNumber=1)
         {
-            var products = _service.GetProducts(categoryId);
+            var products = _service.GetProducts(categoryId,pageNumber);
 
             return products;
         }
