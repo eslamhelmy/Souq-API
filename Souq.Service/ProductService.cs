@@ -25,7 +25,7 @@ namespace Souq.Service
             _mapper = mapper;
         }
 
-        public PagingViewModel<List<ProductViewModel>> GetProducts(int? categoryId, int pageNumber=1)
+        public PagingViewModel<List<ProductViewModel>> GetProducts(int categoryId = -1, int pageNumber=1)
         {
             var count = _repository.GetProductsCount(categoryId);
             var totalPages = (int)Math.Ceiling(count / (double)pageSize);

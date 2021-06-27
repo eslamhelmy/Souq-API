@@ -16,21 +16,21 @@ namespace Souq.Repository
             _dbset = context.Set<Product>();
         }
 
-        public IEnumerable<Product> GetProducts(int? categoryId)
+        public IEnumerable<Product> GetProducts(int categoryId)
         {
             return
-                 _dbset.Where(x => categoryId == null || x.CategoryID == categoryId).ToList();
+                 _dbset.Where(x => categoryId == -1 || x.CategoryID == categoryId).ToList();
         }
 
-        public IQueryable<Product> GetProductsAsQueryable(int? categoryId)
+        public IQueryable<Product> GetProductsAsQueryable(int categoryId)
         {
             return
-                 _dbset.Where(x => categoryId == null || x.CategoryID == categoryId);
+                 _dbset.Where(x => categoryId == -1 || x.CategoryID == categoryId);
         }
-        public int GetProductsCount(int? categoryId)
+        public int GetProductsCount(int categoryId)
         {
             return
-                 _dbset.Where(x => categoryId == null || x.CategoryID == categoryId).Count();
+                 _dbset.Where(x => categoryId == -1 || x.CategoryID == categoryId).Count();
         }
 
         public Product GetProductById(int id)
